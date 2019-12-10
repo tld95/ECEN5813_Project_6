@@ -22,12 +22,16 @@ void vADC_CallBack(TimerHandle_t xTimer)
 		uint16_t rawRegValue = ADC16_GetChannelConversionValue(ADC16_BASE, ADC16_CHANNEL_GROUP);
 		if (index < MAX_SINE_WAVE_VALUES)
 		{
-			Log_integer(STATUS_LEVEL, ADC_CALL_BACK, rawRegValue);
+			Log_integer(DEBUG_LEVEL, ADC_CALL_BACK, rawRegValue);
 			data[index] = rawRegValue;
 			index++;
 		}
 		else
 		{
+			Log_string(STATUS_LEVEL, ADC_CALL_BACK, "DMA Transfer Starting");
+			LED_GREEN_OFF();
+			LED_BLUE_ON();
+			vTaskDelay(pdMS_TO_TICKS(500));
 			adcSineWaveCount++;
 			DMA0_Transfer(&data[0], &dspBuffer[0]);
 		}

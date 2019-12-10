@@ -36,7 +36,7 @@ void vDAC_CallBack(TimerHandle_t xTimer)
 		LED_GREEN_TOGGLE();
 #endif
 		static uint32_t index = 0;
-		Log_integer(STATUS_LEVEL, DAC_CALL_BACK, sineWave[index]);
+		Log_integer(DEBUG_LEVEL, DAC_CALL_BACK, sineWave[index]);
 		DAC_SetBufferValue(DAC_BASEADDR, 0U, sineWave[index]);
 		index++;
 		if (index == MAX_SINE_WAVE_VALUES)

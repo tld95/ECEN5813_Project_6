@@ -7,7 +7,8 @@ void DMA_Callback(dma_handle_t *handle, void *param)
 {
     g_Transfer_Done = true;
     processDSP_BufferAndOutputReport(dspBuffer);
-    //Log_string(STATUS_LEVEL, DMA_TRANSFER, "DMA Transfer Complete");
+    LED_BLUE_OFF();
+    Log_string(STATUS_LEVEL, DMA_TRANSFER, "DMA Transfer Complete");
 }
 
 void DMA0_Transfer(uint16_t *srcAddr, uint16_t *destAddr)

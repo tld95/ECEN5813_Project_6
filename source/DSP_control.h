@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 #include "DAC_control.h"
 #include "ADC_control.h"
 #include "logger.h"
