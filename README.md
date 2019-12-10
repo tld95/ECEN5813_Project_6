@@ -1,6 +1,6 @@
 # ECEN5813_Project_6
 # Tristan Duenas 
-# Project Demonstration YouTube Video Link 
+# Project Demonstration YouTube Video Link https://youtu.be/3rgBDsAhFZs 
 
 # Bruce Montgomery has approved not needing to submit an oscilloscope trace due to distance learning resource limitations
 # I completed the 5 point extra credit for using a FreeRTOS Mutex to control access to the shared LED

@@ -89,6 +89,10 @@ int main(void) {
     LED_GREEN_INIT(1);
     LED_BLUE_INIT(1);
 
+    LED_BLUE_OFF();
+    LED_GREEN_OFF();
+    LED_RED_OFF();
+
     initDAC0();
 #ifdef PROGRAM_TWO
     initADC0();
