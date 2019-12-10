@@ -1,3 +1,12 @@
+/*
+ *  PES Project Six ADC Control source code implementation
+ *	Tristan Duenas
+ *	Refereneces:
+ *	https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
+ *	https://www.freertos.org
+ *	SDK_2.x_FRDM-KL25Z
+ */
+
 #include "ADC_control.h"
 
 TimerHandle_t ADC_Timer;
@@ -8,7 +17,7 @@ uint16_t dspBuffer[MAX_SINE_WAVE_VALUES];
 uint8_t transferComplete;
 uint8_t adcSineWaveCount = 0;
 
-// https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
+// Referenced https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vADC_CallBack(TimerHandle_t xTimer)
 {
 	if (xSemaphoreTake(xSemaphore, (TickType_t) 10))
@@ -39,6 +48,7 @@ void vADC_CallBack(TimerHandle_t xTimer)
 	}
 }
 
+// Referenced https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void initADC_Timer()
 {
 	ADC_Timer = xTimerCreate("ADCTimer", pdMS_TO_TICKS(100), pdTRUE, (void *) 0, vADC_CallBack);
@@ -55,6 +65,7 @@ void initADC_Timer()
     }
 }
 
+// Referenced ADC example from SDK_2.x_FRDM-KL25Z
 void initADC0()
 {
 	// Configure the ADC

@@ -1,8 +1,8 @@
 /*
- * PES Project Two Timing Control source code implementation
+ * PES Project Six Timing Control source code implementation
  * Tristan Duenas
  * Referenced:
- * PES Coding Exercise.pdf
+ * https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
  */
 
 #include "timing_control.h"
@@ -31,18 +31,6 @@ void initLoggerTimer()
 
     	}
     }
-}
-
-void delay(volatile uint32_t mSec)
-{
-	uint32_t cyclesPerMsec = oscConfig_BOARD_BootClockRUN.freq / MILLI_SEC_IN_SEC;
-
-	uint32_t delayCycles = mSec * cyclesPerMsec;
-	while(delayCycles!=0)
-	{
-		__asm volatile("NOP");
-		delayCycles--;
-	}
 }
 
 void getTimeStamp(char* timeStamp)

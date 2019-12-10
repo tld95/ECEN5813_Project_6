@@ -1,7 +1,8 @@
 /*
- *  PES Project Two/Three Timing Control header code implementation
+ *  PES Project Six Timing Control header code implementation
  *	Tristan Duenas
- *	References: My (Tristan Duenas) PES Project 2 timing_control module
+ *	References:
+ *	https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
  */
 
 #ifndef __TIMING_CONTROL_H__
@@ -17,22 +18,14 @@
 #include "timers.h"
 #include "logger.h"
 
-#define MILLI_SEC_IN_SEC 1000.0
-
 /*
- * The delay function delays for n milliseconds.
- * When building with either the FB_RUN or FB_DEBUG build flags
- * delay will use the KL25Z clock frequency to determine the amount
- * of cycles to wait for n milliseconds.
- * When building with either the PC_RUN or PC_DEBUG build flags
- * delay will use the CLOCKS_PER_SEC from sys/time.h to determine the
- * amount of cycles to wait for n milliseconds.
+ * Time for timestamp is now updated as a result of FREERTOS timer
+ * that updates every millisecond.
  */
-void delay(volatile uint32_t mSec);
-void initSysTick();
-void SysTick_Handler();
 void getTimeStamp(char* timeStamp);
+// Timer call back to updated global time in milliseconds since start of program
 void vTimerCallBack(TimerHandle_t xTimer);
+// initialization of logger timer
 void initLoggerTimer();
 
 #endif

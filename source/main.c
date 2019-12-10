@@ -28,9 +28,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-/**
- * @file    main.c
- * @brief   Application entry point.
+/*
+ *  PES Project Six main source code implementation
+ *	Tristan Duenas
+ *	Refereneces:
+ *	https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
+ *	https://www.freertos.org
+ *	SDK_2.x_FRDM-KL25Z
  */
 #include <stdio.h>
 #include "board.h"
@@ -44,7 +48,6 @@
 #include "queue.h"
 #include "timers.h"
 #include "logger.h"
-#include "led_control.h"
 #include "timing_control.h"
 #include "DAC_control.h"
 #include "ADC_control.h"
@@ -56,6 +59,8 @@
 
 TimerHandle_t Program_Timer;
 
+// Call back function for stopping ADC/DAC FREERTOS timers after max runs of program are completed
+// Referenced https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vProgram_CallBack(TimerHandle_t xTimer)
 {
 	if (dacSineWaveCount >= MAX_RUNS)
@@ -88,7 +93,6 @@ int main(void) {
 #ifdef PROGRAM_TWO
     initADC0();
     initDMA0();
-    initDSP();
 #endif
 
     Log_enable();
@@ -106,6 +110,8 @@ int main(void) {
     Log_string(STATUS_LEVEL, MAIN, "Program 2 Started");
 #endif
 
+    // Starts FREERTOS timer to check for Project 6 Program completion
+    // Referenced https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 	Program_Timer = xTimerCreate("Program Complete", pdMS_TO_TICKS(100), pdTRUE, (void *) 0, vProgram_CallBack);
     if (Program_Timer == NULL)
     {
@@ -119,6 +125,7 @@ int main(void) {
     	}
     }
 
+    // Start FREERTOS scheduler
     vTaskStartScheduler();
     while (1)
     {

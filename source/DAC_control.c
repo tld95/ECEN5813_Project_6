@@ -1,3 +1,12 @@
+/*
+ *  PES Project Six DAC Control source code implementation
+ *	Tristan Duenas
+ *	Refereneces:
+ *	https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
+ *	https://www.freertos.org
+ *	SDK_2.x_FRDM-KL25Z
+ */
+
 #include "DAC_control.h"
 /*
 static const float sineWave[MAX_SINE_WAVE_VALUES] = {
@@ -25,7 +34,7 @@ TimerHandle_t DAC_Timer;
 uint8_t dacSineWaveCount = 0;
 SemaphoreHandle_t xSemaphore;
 
-// https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
+// Referenced https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vDAC_CallBack(TimerHandle_t xTimer)
 {
 	if (xSemaphoreTake(xSemaphore, (TickType_t) 10))
@@ -48,6 +57,7 @@ void vDAC_CallBack(TimerHandle_t xTimer)
 	}
 }
 
+// Referenced https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void initDAC_Timer()
 {
 	DAC_Timer = xTimerCreate("DACTimer", pdMS_TO_TICKS(100), pdTRUE, (void *) 0, vDAC_CallBack);
@@ -64,6 +74,7 @@ void initDAC_Timer()
     }
 }
 
+// Referenced DAC example from SDK_2.x_FRDM-KL25Z
 void initDAC0()
 {
 	dac_config_t dacConfigStruct;

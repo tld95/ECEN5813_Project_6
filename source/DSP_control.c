@@ -1,5 +1,17 @@
+/*
+ *  PES Project Six DSP Control source code implementation
+ *	Tristan Duenas
+ *	Refereneces:
+ *	https://www.sanfoundry.com/c-program-mean-variance-standard-deviation/
+ */
+
 #include "DSP_control.h"
 
+/*
+ * Processes ADC raw machine unit data and converts it to voltages.
+ * Once in voltage format the max, min, average, and standard deviations of the
+ * buffer are calculated.
+ */
 void processDSP_BufferAndOutputReport(uint16_t* buffer)
 {
 	float maxVoltage = 1.0;
@@ -62,8 +74,4 @@ uint16_t getFirstVoltageDigit(float f)
 uint16_t getSecondVoltageDigit(float f, uint16_t firstDigit)
 {
 	return (uint16_t)(((f * 100) - (firstDigit * 100))/10);
-}
-
-void initDSP()
-{
 }
