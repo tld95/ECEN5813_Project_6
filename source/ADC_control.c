@@ -3,16 +3,30 @@
 TimerHandle_t ADC_Timer;
 adc16_config_t adc16ConfigStruct;
 adc16_channel_config_t adc16ChannelConfigStruct;
+uint16_t data[MAX_SINE_WAVE_VALUES];
+uint16_t dspBuffer[MAX_SINE_WAVE_VALUES];
+uint8_t transferComplete;
 
 // https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vADC_CallBack(TimerHandle_t xTimer)
 {
-    ADC16_SetChannelConfig(ADC16_BASE, ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
-    while (0U == (kADC16_ChannelConversionDoneFlag &
-                  ADC16_GetChannelStatusFlags(ADC16_BASE, ADC16_CHANNEL_GROUP)))
-    {
-    }
-    PRINTF("ADC Value: %d\r\n", ADC16_GetChannelConversionValue(ADC16_BASE, ADC16_CHANNEL_GROUP));
+	ADC16_SetChannelConfig(ADC16_BASE, ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
+	while (0U == (kADC16_ChannelConversionDoneFlag &
+				  ADC16_GetChannelStatusFlags(ADC16_BASE, ADC16_CHANNEL_GROUP)))
+	{
+	}
+	static uint32_t index = 0;
+	uint16_t rawRegValue = ADC16_GetChannelConversionValue(ADC16_BASE, ADC16_CHANNEL_GROUP);
+	if (index < MAX_SINE_WAVE_VALUES)
+	{
+		Log_integer(STATUS_LEVEL, ADC_CALL_BACK, rawRegValue);
+		data[index] = rawRegValue;
+		index++;
+	}
+	else
+	{
+		DMA0_Transfer(&data[0], &dspBuffer[0]);
+	}
 }
 
 void initADC_Timer()

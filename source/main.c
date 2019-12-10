@@ -47,6 +47,12 @@
 #include "led_control.h"
 #include "timing_control.h"
 #include "DAC_control.h"
+#include "ADC_control.h"
+#include "DMA_control.h"
+#include "DSP_control.h"
+
+#define LED3_PORT GPIOD
+#define LED3_PIN 1U
 
 /*
  * @brief   Application entry point.
@@ -59,18 +65,32 @@ int main(void) {
     BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
+
+    LED_RED_INIT(1);
+    LED_GREEN_INIT(1);
+    LED_BLUE_INIT(1);
+
     initDAC0();
+#ifdef PROGRAM_TWO
     initADC0();
+    initDMA0();
+    initDSP();
+#endif
 
     Log_enable();
     // Runs at 1KHz
     initLoggerTimer();
     // Runs at 100Hz
     initDAC_Timer();
+#ifdef PROGRAM_TWO
     initADC_Timer();
+#endif
 
-    Log_string(STATUS_LEVEL, MAIN, "Project 6 Started");
-
+#ifndef PROGRAM_TWO
+    Log_string(STATUS_LEVEL, MAIN, "Program 1 Started");
+#else
+    Log_string(STATUS_LEVEL, MAIN, "Program 2 Started");
+#endif
 
     vTaskStartScheduler();
     while (1)

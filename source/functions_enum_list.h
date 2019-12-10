@@ -56,6 +56,11 @@ typedef enum function_names
 	PROCESS_AND_DISPLAY_RECEIVED_CHARACTERS = 32,
 	UPDATE_ASCII_TRACKER = 33,
 	DISPLAY_ASCII_TRACKER = 34,
+	// DAC
+	DAC_CALL_BACK = 35,
+	ADC_CALL_BACK = 36,
+	DMA_TRANSFER = 37,
+	DSP_PROCESS_REPORT = 38,
 } Function_Names;
 
 void getFunctionName(Function_Names function, char* name);

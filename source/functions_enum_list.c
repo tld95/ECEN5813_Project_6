@@ -114,6 +114,18 @@ void getFunctionName(Function_Names function, char* name)
 		case DISPLAY_ASCII_TRACKER:
 			strcpy(name, "DISPLAY_ASCII_TRACKER");
 			break;
+		case DAC_CALL_BACK:
+			strcpy(name, "DAC_CALL_BACK");
+			break;
+		case ADC_CALL_BACK:
+			strcpy(name, "ADC_CALL_BACK");
+			break;
+		case DMA_TRANSFER:
+			strcpy(name, "DMA_TRANSFER");
+			break;
+		case DSP_PROCESS_REPORT:
+			strcpy(name, "DSP_PROCESS_REPORT");
+			break;
 		default:
 			// Do nothing
 			break;

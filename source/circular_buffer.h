@@ -13,11 +13,11 @@
 #include "uart0_control.h"
 #include "led_control.h"
 
-#define MAX_BUFFER_SIZE 1024
+#define MAX_BUFFER_SIZE 81
 
 typedef struct circularBuffer
 {
-	uint8_t buffer[MAX_BUFFER_SIZE];
+	uint16_t buffer[MAX_BUFFER_SIZE];
 	uint32_t head;
 	uint32_t tail;
 	uint32_t length;
