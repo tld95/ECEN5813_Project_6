@@ -42,7 +42,7 @@ circular buffer implementation and instead used a new array for data that will j
 I used the auto-generated makefile for this project.
 Building requires performing a clean, then rebuild.
 # Building for the Program One requires going to Project Properties/Settings/Tool Settings/Preprocessor/ and adding the PROGRAM_ONE and removing PROGRAM_TWO if present
-# Building for the Program Two requires going to Project Properties/Settings/Tool Settings/Preprocessor/ and adding the PROGRAM_TWO and removing PROGRAM_TWO if present
+# Building for the Program Two requires going to Project Properties/Settings/Tool Settings/Preprocessor/ and adding the PROGRAM_TWO and removing PROGRAM_ONE if present
 # Building for the DEBUG build requires going to Project Properties/Settings/Tool Settings/Preprocessor/ and adding the DEBUG_FLAG
 # Building for the STATUS build requires going to Project Properties/Settings/Tool Settings/Preprocessor/ and adding the STATUS_FLAG
 # ECEN5813_Project_6.axf is stored in the Debug folder of the repository and can be run through the GDB PEMicro Interface Debugging Debug configurations using the axf file generated.
