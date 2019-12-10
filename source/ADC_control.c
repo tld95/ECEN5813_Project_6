@@ -11,23 +11,27 @@ uint8_t adcSineWaveCount = 0;
 // https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vADC_CallBack(TimerHandle_t xTimer)
 {
-	ADC16_SetChannelConfig(ADC16_BASE, ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
-	while (0U == (kADC16_ChannelConversionDoneFlag &
-				  ADC16_GetChannelStatusFlags(ADC16_BASE, ADC16_CHANNEL_GROUP)))
+	if (xSemaphoreTake(xSemaphore, (TickType_t) 10))
 	{
-	}
-	static uint32_t index = 0;
-	uint16_t rawRegValue = ADC16_GetChannelConversionValue(ADC16_BASE, ADC16_CHANNEL_GROUP);
-	if (index < MAX_SINE_WAVE_VALUES)
-	{
-		Log_integer(STATUS_LEVEL, ADC_CALL_BACK, rawRegValue);
-		data[index] = rawRegValue;
-		index++;
-	}
-	else
-	{
-		adcSineWaveCount++;
-		DMA0_Transfer(&data[0], &dspBuffer[0]);
+		ADC16_SetChannelConfig(ADC16_BASE, ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
+		while (0U == (kADC16_ChannelConversionDoneFlag &
+					  ADC16_GetChannelStatusFlags(ADC16_BASE, ADC16_CHANNEL_GROUP)))
+		{
+		}
+		static uint32_t index = 0;
+		uint16_t rawRegValue = ADC16_GetChannelConversionValue(ADC16_BASE, ADC16_CHANNEL_GROUP);
+		if (index < MAX_SINE_WAVE_VALUES)
+		{
+			Log_integer(STATUS_LEVEL, ADC_CALL_BACK, rawRegValue);
+			data[index] = rawRegValue;
+			index++;
+		}
+		else
+		{
+			adcSineWaveCount++;
+			DMA0_Transfer(&data[0], &dspBuffer[0]);
+		}
+		xSemaphoreGive(xSemaphore);
 	}
 }
 

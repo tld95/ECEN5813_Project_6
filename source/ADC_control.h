@@ -12,6 +12,7 @@
 #include "circular_buffer.h"
 #include "DMA_control.h"
 #include "DAC_control.h"
+#include "semphr.h"
 
 #define ADC16_BASE ADC0
 #define ADC16_CHANNEL_GROUP 0U

@@ -23,23 +23,28 @@ static const uint16_t sineWave[MAX_SINE_WAVE_VALUES] = {
 	1799, 1737, 1675, 1613, 1551, 1489, 1427, 1365, 1302, 1240};
 TimerHandle_t DAC_Timer;
 uint8_t dacSineWaveCount = 0;
+SemaphoreHandle_t xSemaphore;
 
 // https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vDAC_CallBack(TimerHandle_t xTimer)
 {
-#ifndef PROGRAM_TWO
-	LED_BLUE_TOGGLE();
-#else
-	LED_GREEN_TOGGLE();
-#endif
-	static uint32_t index = 0;
-	Log_integer(STATUS_LEVEL, DAC_CALL_BACK, sineWave[index]);
-	DAC_SetBufferValue(DAC_BASEADDR, 0U, sineWave[index]);
-	index++;
-	if (index == MAX_SINE_WAVE_VALUES)
+	if (xSemaphoreTake(xSemaphore, (TickType_t) 10))
 	{
-		index = 0;
-		dacSineWaveCount++;
+#ifndef PROGRAM_TWO
+		LED_BLUE_TOGGLE();
+#else
+		LED_GREEN_TOGGLE();
+#endif
+		static uint32_t index = 0;
+		Log_integer(STATUS_LEVEL, DAC_CALL_BACK, sineWave[index]);
+		DAC_SetBufferValue(DAC_BASEADDR, 0U, sineWave[index]);
+		index++;
+		if (index == MAX_SINE_WAVE_VALUES)
+		{
+			index = 0;
+			dacSineWaveCount++;
+		}
+		xSemaphoreGive(xSemaphore);
 	}
 }
 
@@ -71,6 +76,7 @@ void initDAC0()
 	DAC_Enable(DAC_BASEADDR, true);
 	DAC_SetBufferReadPointer(DAC_BASEADDR, 0U);
 	dacSineWaveCount = 0;
+	xSemaphore = xSemaphoreCreateMutex();
 }
 
 
