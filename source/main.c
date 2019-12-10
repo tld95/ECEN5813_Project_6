@@ -54,6 +54,20 @@
 #define LED3_PORT GPIOD
 #define LED3_PIN 1U
 
+TimerHandle_t Program_Timer;
+
+void vProgram_CallBack(TimerHandle_t xTimer)
+{
+	if (dacSineWaveCount >= MAX_RUNS)
+	{
+		xTimerStop(DAC_Timer, 0);
+	}
+	if (adcSineWaveCount >= MAX_RUNS)
+	{
+		xTimerStop(ADC_Timer, 0);
+	}
+}
+
 /*
  * @brief   Application entry point.
  */
@@ -91,6 +105,19 @@ int main(void) {
 #else
     Log_string(STATUS_LEVEL, MAIN, "Program 2 Started");
 #endif
+
+	Program_Timer = xTimerCreate("Program Complete", pdMS_TO_TICKS(100), pdTRUE, (void *) 0, vProgram_CallBack);
+    if (Program_Timer == NULL)
+    {
+
+    }
+    else
+    {
+    	if (xTimerStart(Program_Timer, 0) != pdPASS)
+    	{
+
+    	}
+    }
 
     vTaskStartScheduler();
     while (1)

@@ -20,6 +20,8 @@
 extern circularBuffer cBuffer;
 extern uint16_t data[MAX_SINE_WAVE_VALUES];
 extern uint16_t dspBuffer[MAX_SINE_WAVE_VALUES];
+extern uint8_t adcSineWaveCount;
+extern TimerHandle_t ADC_Timer;
 
 void vADC_CallBack(TimerHandle_t xTimer);
 void initADC_Timer();

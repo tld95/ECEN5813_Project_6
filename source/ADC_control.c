@@ -6,6 +6,7 @@ adc16_channel_config_t adc16ChannelConfigStruct;
 uint16_t data[MAX_SINE_WAVE_VALUES];
 uint16_t dspBuffer[MAX_SINE_WAVE_VALUES];
 uint8_t transferComplete;
+uint8_t adcSineWaveCount = 0;
 
 // https://www.freertos.org/FreeRTOS-timers-xTimerCreate.html
 void vADC_CallBack(TimerHandle_t xTimer)
@@ -25,6 +26,7 @@ void vADC_CallBack(TimerHandle_t xTimer)
 	}
 	else
 	{
+		adcSineWaveCount++;
 		DMA0_Transfer(&data[0], &dspBuffer[0]);
 	}
 }
@@ -62,4 +64,5 @@ void initADC0()
 	ADC16_EnableHardwareTrigger(ADC16_BASE, false); /* Make sure the software trigger is used. */
     adc16ChannelConfigStruct.channelNumber = ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = false;
+    adcSineWaveCount = 0;
 }

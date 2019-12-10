@@ -18,6 +18,8 @@
 #define DMA_CHANNEL 0
 #define DMA_SOURCE 63
 
+extern dma_handle_t g_DMA_Handle;
+
 void initDMA0();
 void DMA0_Transfer(uint16_t *srcAddr, uint16_t *destAddr);
 void DMA_Callback(dma_handle_t *handle, void *param);
