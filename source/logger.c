@@ -155,47 +155,6 @@ void Log_integer(logLevel level, Function_Names funcName, size_t integer)
 	}
 }
 
-void Log_float(logLevel level, Function_Names funcName, float fpValue)
-{
-	if (Log_status() == ENABLED)
-	{
-		if (level == TEST_LEVEL)
-		{
-#ifdef TEST_FLAG
-			char timeStamp[15];
-			getTimeStamp(timeStamp);
-			char nameString[MAX_NAME_LENGTH];
-			getFunctionName(funcName, nameString);
-			PRINTF("Test: %s: %f %s\r\n", nameString, fpValue, timeStamp);
-#endif
-		}
-		else if (level == DEBUG_LEVEL)
-		{
-#ifdef DEBUG_FLAG
-			char timeStamp[15];
-			getTimeStamp(timeStamp);
-			char nameString[MAX_NAME_LENGTH];
-			getFunctionName(funcName, nameString);
-			PRINTF("Debug: %s: %f %s\r\n", nameString, fpValue, timeStamp);
-#endif
-		}
-		else if (level == STATUS_LEVEL)
-		{
-#ifdef STATUS_FLAG
-			char timeStamp[15];
-			getTimeStamp(timeStamp);
-			char nameString[MAX_NAME_LENGTH];
-			getFunctionName(funcName, nameString);
-			PRINTF("Status: %s: %f %s\r\n", nameString, fpValue, timeStamp);
-#endif
-		}
-		else
-		{
-			// Do nothing
-		}
-	}
-}
-
 void Log_newline()
 {
 	PRINTF("\r\n");

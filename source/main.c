@@ -98,7 +98,7 @@ int main(void) {
     Log_enable();
     // Runs at 1KHz
     initLoggerTimer();
-    // Runs at 100Hz
+    // Runs at 10Hz
     initDAC_Timer();
 #ifdef PROGRAM_TWO
     initADC_Timer();

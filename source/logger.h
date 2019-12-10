@@ -42,8 +42,6 @@ void Log_data(logLevel level, Function_Names funcName, uint8_t *address, size_t 
 void Log_string(logLevel level, Function_Names funcName, char *string);
 // Logs an integer
 void Log_integer(logLevel level, Function_Names funcName, size_t integer);
-// Logs a float
-void Log_float(logLevel level, Function_Names funcName, float fpValue);
 // Logs newline
 void Log_newline();
 
